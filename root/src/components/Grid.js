@@ -8,8 +8,11 @@ class LifeGrid extends React.Component {
 
   componentDidMount() {
     this.makeGrid();
+    this.state.grid.createGrid();
+    console.log(this.state.grid);
   }
 
+  // creates grid drawing
   makeGrid = () => {
     // grab canvas and set its context
     let canvas = this.refs.canvas;
@@ -17,7 +20,7 @@ class LifeGrid extends React.Component {
 
     // start path, then loop and create the vertical lines of grid
     context.beginPath();
-    for (let x = 0; x < this.state.grid.gridSize; x += this.state.grid.cellSize) {
+    for (let x = 0; x <= this.state.grid.gridSize; x += this.state.grid.cellSize) {
       context.moveTo(x, 0);
       context.lineTo(x, this.state.grid.gridSize);
     }
@@ -25,7 +28,7 @@ class LifeGrid extends React.Component {
 
     // start path, then loop and create the horizontal lines of the grid
     context.beginPath();
-    for (let y = 0; y < this.state.grid.gridSize; y += this.state.grid.cellSize) {
+    for (let y = 0; y <= this.state.grid.gridSize; y += this.state.grid.cellSize) {
       context.moveTo(0, y);
       context.lineTo(this.state.grid.gridSize, y);
     }
@@ -35,8 +38,11 @@ class LifeGrid extends React.Component {
     // get image data and create screen buffer
     let imageData = context.getImageData(0,0,canvas.width,canvas.height);
     let screenBuffer = imageData.data;
-    
+  }
 
+  handleGridClick = (e) => {
+    let canvas = this.refs.canvas;
+    let context = canvas.getContext('2d');
   }
 
   render() {
