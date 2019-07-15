@@ -1,7 +1,7 @@
 class Grid {
   constructor(cellSize, gridSize) {
     this.cellSize = cellSize;
-    this.size = gridSize;
+    this.gridSize = gridSize;
     this.data = [];
   }
 
@@ -14,7 +14,7 @@ class Grid {
     // create cols and insert cells
     for (let x = 0; x < this.gridSize; x++) {
       for (let y = 0; y < this.gridSize; y++) {
-        this.data[x][y] = new Cell(false, 10*x, 10*y)
+        this.data[x][y] = new Cell(false, this.cellSize * x, this.cellSize * y)
       }
     }
   }
