@@ -1,6 +1,7 @@
 import React from "react";
+import Grid from '../util/Life';
 
-class Grid extends React.Component {
+class LifeGrid extends React.Component {
   state = {};
 
   componentDidMount() {
@@ -30,4 +31,4 @@ class Grid extends React.Component {
   }
 }
 
-export default Grid;
+export default LifeGrid;

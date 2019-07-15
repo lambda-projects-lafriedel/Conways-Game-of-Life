@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from './components/Grid';
+import LifeGrid from './components/Grid';
 // generate board grid - static to start, but make it dynamic for "custom functionality"
 
 class App extends React.Component {
@@ -16,7 +16,7 @@ class App extends React.Component {
       <>
         <h1>Conway's Game of Life</h1>
         <p>Generation: 0</p>
-        <Grid height={this.state.canvasHeight} width={this.state.canvasWidth} />
+        <LifeGrid height={this.state.canvasHeight} width={this.state.canvasWidth} />
         <input type="number" placeholder="Grid height" />
         <input type="number" placeholder="Grid width" />
         <button>Start</button>
