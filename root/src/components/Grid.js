@@ -33,16 +33,17 @@ class LifeGrid extends React.Component {
       context.lineTo(this.state.grid.gridSize, y);
     }
     context.stroke();
-
-  
-    // get image data and create screen buffer
-    let imageData = context.getImageData(0,0,canvas.width,canvas.height);
-    let screenBuffer = imageData.data;
   }
 
   handleGridClick = (e) => {
     let canvas = this.refs.canvas;
     let context = canvas.getContext('2d');
+    let canvasBoundingBox = canvas.getBoundingClientRect();
+
+    xIndex = Math.floor((e.clientX - canvasBoundingBox.x) / this.state.grid.cellSize);
+    yIndex = Math.floor((e.clientY - canvasBoundingBox.y) / this.state.grid.cellSize);
+ 
+    // toggle state
   }
 
   render() {
@@ -52,6 +53,7 @@ class LifeGrid extends React.Component {
           ref="canvas"
           width={this.props.width}
           height={this.props.height}
+          onClick={e => this.handleGridClick(e)}
         />
       </>
     );
