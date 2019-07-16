@@ -12,6 +12,15 @@ class LifeGrid extends React.Component {
     console.log(this.state.grid);
   }
 
+  // componeentDidUpdate(prevProps) {
+  //   if (prevProps.height != this.props.height) {
+  //     this.setState({
+  //       grid: new Grid(this.props.cellSize, this.props.height)
+  //     })
+  //   }
+  //   this.makeGrid()
+  // }
+
   // creates grid drawing
   makeGrid = () => {
     // grab canvas and set its context
@@ -52,6 +61,8 @@ class LifeGrid extends React.Component {
     // fill cell with appropriate fill
     context.fillStyle = currentCell.alive ? 'black' : 'white';
     context.fillRect(xIndex * this.state.grid.cellSize, yIndex * this.state.grid.cellSize, this.props.cellSize - 1, this.props.cellSize - 1)
+
+    this.state.grid.applyRulesAndUpdate()
   }
 
   render() {
