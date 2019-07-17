@@ -6,15 +6,21 @@ class LifeGrid extends React.Component {
     generation: 0,
     gameRunning: false,
     canvasSize: 300,
-    cellSize: 30,
-    grid: new Grid(30, 300),
-    gridAnimating: false
+    cellSize: 15,
+    grid: new Grid(15, 300),
+    gridAnimating: false,
+    newCellSize: "",
+    newGridSize: ""
   };
 
   componentDidMount() {
+    this.createBothGrids();
+  }
+
+  createBothGrids = () => {
     this.makeGrid();
     this.state.grid.createGrids();
-    console.log(this.state.grid);
+    console.log("ran")
   }
 
   // creates grid drawing
@@ -23,7 +29,10 @@ class LifeGrid extends React.Component {
     let canvas = this.refs.canvas;
     let context = canvas.getContext("2d");
     context.lineWidth = 1;
-    context.strokeStyle = "gray";
+    context.strokeStyle = "lightgray";
+    context.fillStyle = "white";
+
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
     // start path, then loop and create the vertical lines of grid
     context.beginPath();
@@ -49,6 +58,20 @@ class LifeGrid extends React.Component {
     }
     context.stroke();
   };
+
+  changeCellSize = (e) => {
+    e.preventDefault();
+    this.setState({
+      cellSize: this.state.newCellSize,
+      grid: new Grid(this.state.newCellSize, 300)
+    }, this.createBothGrids)
+  };
+
+  handleInputChange = (e) => {
+    this.setState({
+      [e.target.name]: parseInt(e.target.value)
+    })
+  }
 
   handleCellClick = e => {
     let canvas = this.refs.canvas;
@@ -105,13 +128,13 @@ class LifeGrid extends React.Component {
 
   tick = () => {
     if (this.state.gridAnimating) {
-    this.drawNextGen();
-    this.state.grid.updateGridAndBuffer();
-    this.setState(prevState => ({
-      generation: prevState.generation + 1
-    }));
-    requestAnimationFrame(this.tick);
-  }
+      this.drawNextGen();
+      this.state.grid.updateGridAndBuffer();
+      this.setState(prevState => ({
+        generation: prevState.generation + 1
+      }));
+      requestAnimationFrame(this.tick);
+    }
   };
 
   startGame = () => {
@@ -124,8 +147,8 @@ class LifeGrid extends React.Component {
   stopGame = () => {
     this.setState({
       gridAnimating: false
-    })
-  }
+    });
+  };
 
   clearCanvas = () => {
     // set all cell states to dead
@@ -135,13 +158,12 @@ class LifeGrid extends React.Component {
     this.setState({
       generation: 0,
       gridAnimating: false
-    })
+    });
     // draw the state of the grid
     this.drawNextGen();
-  }
+  };
 
   render() {
-    console.log(this.state.generation)
     return (
       <>
         <p>Generation: {this.state.generation}</p>
@@ -151,9 +173,15 @@ class LifeGrid extends React.Component {
           height={this.state.canvasSize}
           onClick={e => this.handleCellClick(e)}
         />
-        <form onSubmit={e => this.changeGridSize(e)}>
-          <input type="number" placeholder="Grid size" />
-          <button type="submit">Change Grid Size</button>
+        <form onSubmit={e => this.changeCellSize(e)}>
+          <input
+            type="number"
+            name="newCellSize"
+            value={this.state.newCellSize}
+            onChange={e => this.handleInputChange(e)}
+            placeholder="Cell size"
+          />
+          <button type="submit">Change Cell Size</button>
         </form>
         <button onClick={this.startGame}>Start</button>
         <button onClick={this.stopGame}>Stop</button>
