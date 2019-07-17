@@ -121,9 +121,7 @@ class Grid {
     this.applyRulesAndMigrateToBuffer();
 
     let data = this.data
-    let buffer = this.buffer
-
-    this.data = buffer;
+    this.data = this.buffer;
     this.buffer = data;
   }
 
@@ -140,16 +138,16 @@ class Grid {
         const currentCell = this.data[x][y]
 
         if (currentCell.alive) {
-          if (aliveNeighbors < 2 || aliveNeighbors > 3) {
+          if (aliveNeighbors === 2 || aliveNeighbors === 3) {
             // make the currentCell dead, but on the copy/buffer of the grid
             this.buffer[x][y] = currentCell;
-            this.buffer[x][y].alive = !this.buffer[x][y].alive;
+            this.buffer[x][y].alive = false;
           }
         } else {
           if (aliveNeighbors === 3) {
             // make the currentCell alive, but on the copy/buffer of the grid
             this.buffer[x][y] = currentCell;
-            this.buffer[x][y].alive = !this.buffer[x][y].alive;
+            this.buffer[x][y].alive = true;
           }
         }
       }
