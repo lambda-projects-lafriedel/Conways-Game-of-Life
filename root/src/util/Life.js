@@ -96,26 +96,24 @@ class Grid {
     return aliveNeighbors;
   }
 
-  // clearGrid = (grid) => {
-  //   for (let x = 0; x < this.gridSize/this.cellSize; x++) {
-  //     for (let y = 0; y < this.gridSize/this.cellSize; y++) {
-  //       if (grid[x][y].alive) {
-  //         !(grid[x][y].alive);
-  //       }
-  //     }
-  //   }
-  // }
+  clearGridAndBuffer = () => {
+    for (let x = 0; x < this.gridSize/this.cellSize; x++) {
+      for (let y = 0; y < this.gridSize/this.cellSize; y++) {
+          this.data[x][y].alive = false;
+          this.buffer[x][y].alive  = false;
+      }
+    }
+  }
 
-  update = () => {
+  updateGridAndBuffer = () => {
     // switch this.data and this.buffer
+    this.applyRulesAndMigrateToBuffer();
+
     let data = this.data
     let buffer = this.buffer
 
     this.data = buffer;
     this.buffer = data;
-
-    // clear this.buffer
-    this.clearGrid(this.buffer);
   }
 
 
@@ -133,12 +131,14 @@ class Grid {
         if (currentCell.alive) {
           if (aliveNeighbors < 2 || aliveNeighbors > 3) {
             // make the currentCell dead, but on the copy/buffer of the grid
-            this.buffer[x][y] = !currentCell.alive;
+            this.buffer[x][y] = currentCell;
+            this.buffer[x][y].alive = !this.buffer[x][y].alive;
           }
         } else {
           if (aliveNeighbors === 3) {
             // make the currentCell alive, but on the copy/buffer of the grid
-            this.buffer[x][y] = !currentCell.alive;
+            this.buffer[x][y] = currentCell;
+            this.buffer[x][y].alive = !this.buffer[x][y].alive;
           }
         }
       }

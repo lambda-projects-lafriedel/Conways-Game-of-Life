@@ -50,7 +50,7 @@ class LifeGrid extends React.Component {
     context.stroke();
   };
 
-  handleGridClick = e => {
+  handleCellClick = e => {
     let canvas = this.refs.canvas;
     let context = canvas.getContext("2d");
     let canvasBoundingBox = canvas.getBoundingClientRect();
@@ -76,43 +76,87 @@ class LifeGrid extends React.Component {
     );
   };
 
-  displayNextGen = () => {
-    // use requestAnimationFrame to create the animation
+  drawNextGen = () => {
+    const canvas = this.refs.canvas;
+    let context = canvas.getContext("2d");
+
+    for (
+      let x = 0;
+      x < this.state.grid.gridSize / this.state.grid.cellSize;
+      x++
+    ) {
+      for (
+        let y = 0;
+        y < this.state.grid.gridSize / this.state.grid.cellSize;
+        y++
+      ) {
+        context.fillStyle = this.state.grid.data[x][y].alive
+          ? "black"
+          : "white";
+        context.fillRect(
+          x * this.state.grid.cellSize,
+          y * this.state.grid.cellSize,
+          this.state.cellSize - 1,
+          this.state.cellSize - 1
+        );
+      }
+    }
+  };
+
+  tick = () => {
+    if (this.state.gridAnimating) {
+    this.drawNextGen();
+    this.state.grid.updateGridAndBuffer();
+    this.setState(prevState => ({
+      generation: prevState.generation++
+    }));
+    requestAnimationFrame(this.tick);
+  }
+  };
+
+  startGame = () => {
     this.setState({
       gridAnimating: true
     });
-
-    let start = null;
-
-    const step = timestamp => {
-      if (!start) start = timestamp;
-      const elapsed = timestamp - start;
-      if (this.state.gridAnimating) {
-        requestAnimationFrame(step);
-      }
-    };
-
-    requestAnimationFrame(step);
-    // this will call this.state.grid.update() which will flip this.data with this.buffer
+    requestAnimationFrame(this.tick);
   };
+
+  stopGame = () => {
+    this.setState({
+      gridAnimating: false
+    })
+  }
+
+  clearCanvas = () => {
+    // set all cell states to dead
+    this.state.grid.clearGridAndBuffer();
+
+    // set generation to 0 and gridAnimating to false
+    this.setState({
+      generation: 0,
+      gridAnimating: false
+    })
+    // draw the state of the grid
+    this.drawNextGen();
+  }
 
   render() {
     return (
       <>
-       <p>Generation: {this.state.generation}</p>
+        <p>Generation: {this.state.generation}</p>
         <canvas
           ref="canvas"
           width={this.state.canvasSize}
           height={this.state.canvasSize}
-          onClick={e => this.handleGridClick(e)}
+          onClick={e => this.handleCellClick(e)}
         />
         <form onSubmit={e => this.changeGridSize(e)}>
           <input type="number" placeholder="Grid size" />
           <button type="submit">Change Grid Size</button>
         </form>
-        <button>Start</button>
-        <button>Stop</button>
-        <button>Clear</button>
+        <button onClick={this.startGame}>Start</button>
+        <button onClick={this.stopGame}>Stop</button>
+        <button onClick={this.clearCanvas}>Clear</button>
       </>
     );
   }
