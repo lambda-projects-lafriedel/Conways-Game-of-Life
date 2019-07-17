@@ -22,6 +22,17 @@ class Grid {
     }
   }
 
+  generateRandomFirstGen = () => {
+    this.clearGridAndBuffer();
+    for (let x = 0; x < this.gridSize/this.cellSize; x++) {
+      for (let y = 0; y < this.gridSize/this.cellSize; y++) {
+        if (Math.random() < 0.25) {
+          this.data[x][y].alive = true
+        }
+      }
+    }
+  }
+
   getNeighborStates = (x,y) => {
     let aliveNeighbors = 0;
 

@@ -132,6 +132,11 @@ class LifeGrid extends React.Component {
     }
   };
 
+  randomGen = () => {
+    this.state.grid.generateRandomFirstGen();
+    this.drawNextGen();
+  }
+
   tick = () => {
     if (this.state.gridAnimating) {
       this.drawNextGen();
@@ -202,6 +207,7 @@ class LifeGrid extends React.Component {
         <button onClick={this.startGame}>Start</button>
         <button onClick={this.stopGame}>Stop</button>
         <button onClick={this.clearCanvas}>Clear</button>
+        <button onClick={this.randomGen}>Gimme random!</button>
       </>
     );
   }
