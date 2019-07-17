@@ -4,44 +4,19 @@ import LifeGrid from "./components/Grid";
 
 class App extends React.Component {
   state = {
-    // generation, game running
-    generation: 0,
-    gameRunning: false,
-    canvasSize: 300,
-    cellSize: 10
+    // generation: 0,
+    // gameRunning: false,
+    // canvasSize: 300,
+    // cellSize: 10,
+    // grid: new Grid(this.props.cellSize, this.props.height),
+    // gridAnimating: false
   };
-
-  // changeGridSize = e => {
-  //   e.preventDefault();
-  //   console.log(e.target)
-  //   this.setState({
-  //     canvasSize: e.target.value
-  //   }, console.log(this.state));
-  // };
-
-  // handleInputChange = e => {
-  //   this.setState({
-  //     [e.target.name]: e.target.value
-  //   })
-  // }
 
   render() {
     return (
       <>
         <h1>Conway's Game of Life</h1>
-        <p>Generation: {this.state.generation}</p>
-        <LifeGrid
-          height={this.state.canvasSize}
-          width={this.state.canvasSize}
-          cellSize={this.state.cellSize}
-        />
-        <form onSubmit={e => this.changeGridSize(e)}>
-          <input type="number" placeholder="Grid size" />
-          <button type="submit">Change Grid Size</button>
-        </form>
-        <button>Start</button>
-        <button>Stop</button>
-        <button>Clear</button>
+        <LifeGrid />
       </>
     );
   }
