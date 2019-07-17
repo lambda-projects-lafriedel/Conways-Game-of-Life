@@ -6,8 +6,8 @@ class LifeGrid extends React.Component {
     generation: 0,
     gameRunning: false,
     canvasSize: 300,
-    cellSize: 10,
-    grid: new Grid(10, 300),
+    cellSize: 30,
+    grid: new Grid(30, 300),
     gridAnimating: false
   };
 
@@ -108,7 +108,7 @@ class LifeGrid extends React.Component {
     this.drawNextGen();
     this.state.grid.updateGridAndBuffer();
     this.setState(prevState => ({
-      generation: prevState.generation++
+      generation: prevState.generation + 1
     }));
     requestAnimationFrame(this.tick);
   }
@@ -141,6 +141,7 @@ class LifeGrid extends React.Component {
   }
 
   render() {
+    console.log(this.state.generation)
     return (
       <>
         <p>Generation: {this.state.generation}</p>
