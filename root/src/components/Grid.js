@@ -4,7 +4,6 @@ import Grid from "../util/Life";
 class LifeGrid extends React.Component {
   state = {
     generation: 0,
-    gameRunning: false,
     canvasSize: 300,
     cellSize: 15,
     grid: new Grid(15, 300),
@@ -20,7 +19,6 @@ class LifeGrid extends React.Component {
   createBothGrids = () => {
     this.makeGrid();
     this.state.grid.createGrids();
-    console.log("ran")
   }
 
   // creates grid drawing
@@ -63,9 +61,17 @@ class LifeGrid extends React.Component {
     e.preventDefault();
     this.setState({
       cellSize: this.state.newCellSize,
-      grid: new Grid(this.state.newCellSize, 300)
+      grid: new Grid(this.state.newCellSize, this.state.canvasSize)
     }, this.createBothGrids)
   };
+
+  changeGridSize = (e) => {
+    e.preventDefault();
+    this.setState({
+      canvasSize: this.state.newGridSize,
+      grid: new Grid(this.state.cellSize, this.state.newGridSize)
+    }, this.createBothGrids)
+  }
 
   handleInputChange = (e) => {
     this.setState({
@@ -182,6 +188,16 @@ class LifeGrid extends React.Component {
             placeholder="Cell size"
           />
           <button type="submit">Change Cell Size</button>
+        </form>
+        <form onSubmit={e => this.changeGridSize(e)}>
+          <input
+            type="number"
+            name="newGridSize"
+            value={this.state.newGridSize}
+            onChange={e => this.handleInputChange(e)}
+            placeholder="Grid size"
+          />
+          <button type="submit">Change Grid Size</button>
         </form>
         <button onClick={this.startGame}>Start</button>
         <button onClick={this.stopGame}>Stop</button>
