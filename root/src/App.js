@@ -1,6 +1,7 @@
 import React from "react";
 import LifeGrid from "./components/Grid";
 import Rules from "./components/Rules";
+import About from './components/About';
 // generate board grid - static to start, but make it dynamic for "custom functionality"
 
 class App extends React.Component {
@@ -20,6 +21,7 @@ class App extends React.Component {
         <div>
           <LifeGrid />
           <Rules />
+          <About />
         </div>
       </>
     );
