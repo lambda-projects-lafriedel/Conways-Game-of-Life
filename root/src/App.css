@@ -1,0 +1,22 @@
+h1 {
+  text-align: center;
+}
+
+.app {
+  padding-bottom: 30px;
+}
+
+.container {
+  display: flex;
+
+}
+
+.rules {
+  max-width: 30%;
+  min-width: 400px;
+  padding-right: 20px;
+}
+
+.about {
+  max-width: 800px;
+}

@@ -4,9 +4,9 @@ import Grid from "../util/Life";
 class LifeGrid extends React.Component {
   state = {
     generation: 0,
-    canvasSize: 300,
-    cellSize: 15,
-    grid: new Grid(15, 300),
+    canvasSize: 400,
+    cellSize: 10,
+    grid: new Grid(10, 400),
     gridAnimating: false,
     newCellSize: "",
     newGridSize: ""
