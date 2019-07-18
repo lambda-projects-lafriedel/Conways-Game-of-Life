@@ -1,5 +1,6 @@
 import React from "react";
 import LifeGrid from "./components/Grid";
+import Rules from "./components/Rules";
 // generate board grid - static to start, but make it dynamic for "custom functionality"
 
 class App extends React.Component {
@@ -16,7 +17,10 @@ class App extends React.Component {
     return (
       <>
         <h1>Conway's Game of Life</h1>
-        <LifeGrid />
+        <div>
+          <LifeGrid />
+          <Rules />
+        </div>
       </>
     );
   }
