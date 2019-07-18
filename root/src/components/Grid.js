@@ -4,9 +4,9 @@ import Grid from "../util/Life";
 class LifeGrid extends React.Component {
   state = {
     generation: 0,
-    canvasSize: 300,
-    cellSize: 15,
-    grid: new Grid(15, 300),
+    canvasSize: 400,
+    cellSize: 10,
+    grid: new Grid(10, 400),
     gridAnimating: false,
     newCellSize: "",
     newGridSize: ""
@@ -139,8 +139,8 @@ class LifeGrid extends React.Component {
 
   tick = () => {
     if (this.state.gridAnimating) {
-      this.drawNextGen();
       this.state.grid.updateGridAndBuffer();
+      this.drawNextGen();
       this.setState(prevState => ({
         generation: prevState.generation + 1
       }));
@@ -160,6 +160,14 @@ class LifeGrid extends React.Component {
       gridAnimating: false
     });
   };
+
+  stepOneGen = () => {
+    this.state.grid.updateGridAndBuffer();
+    this.drawNextGen();
+    this.setState(prevState => ({
+      generation: prevState.generation + 1
+    }));
+  }
 
   clearCanvas = () => {
     // set all cell states to dead
@@ -206,6 +214,7 @@ class LifeGrid extends React.Component {
         </form>
         <button onClick={this.startGame}>Start</button>
         <button onClick={this.stopGame}>Stop</button>
+        <button onClick={this.stepOneGen}>Step 1 Gen</button>
         <button onClick={this.clearCanvas}>Clear</button>
         <button onClick={this.randomGen}>Gimme random!</button>
       </>
