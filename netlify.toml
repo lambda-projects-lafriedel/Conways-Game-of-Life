@@ -1,4 +1,0 @@
-[build]
-base = "./root/"
-publish = "./root/build/"
-command = "yarn build"
